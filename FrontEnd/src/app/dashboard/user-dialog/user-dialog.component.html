@@ -29,7 +29,7 @@
         </p>
         
         <p>
-            <mat-checkbox (click)="TrainUsertoggle(!trailUser)" [checked]="trailUser">Trail User</mat-checkbox>
+            <mat-checkbox (click)="trailUser =!trailUser " [checked]="trailUser">Trail User</mat-checkbox>
         </p>
     </div>
     <div>
@@ -46,13 +46,14 @@
         <br/>
         <br/>
         <p *ngFor="let item of roles">
-            <mat-checkbox [checked]="item.checked">{{item.value}}</mat-checkbox>
+            <mat-checkbox [checked]="item.checked" (change)=updateRoles(item.value)>{{item.value}}</mat-checkbox>
         </p>
        
     </div>
 </div>
 </form>
     <div mat-dialog-actions class="actions">
-        <button mat-raised-button color="warn">Save</button>
-        <button mat-raised-button color="primary">Reset</button>
+        <button mat-raised-button color="primary" (click)="onSave()" *ngIf="data.action == 'add'">Save</button>
+        <button mat-raised-button color="primary" (click)="onEdit()" *ngIf="data.action == 'edit'">Update</button>
+        <button mat-raised-button *ngIf="data.action == 'add' || data.action == 'edit'">Reset</button>
     </div>

@@ -22,4 +22,11 @@ export class UserService {
   addUser(user: User):Observable<User>{
     return this.http.post<User>(environment.baseURL + 'user',user);
   }
+
+  getUserById(id:number):Observable<User>{
+    return this.http.get<User>(environment.baseURL + 'user/'+ id.toString());
+  }
+  updateUser(user: User):Observable<User>{
+    return this.http.put<User>(environment.baseURL + 'user', user);
+  }
 }
