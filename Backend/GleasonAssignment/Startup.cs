@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BackEndLogic.Features;
+using DataAccess.Entities;
 using DataAccess.Features;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Swashbuckle.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace GleasonAssignment
 {
@@ -35,9 +37,38 @@ namespace GleasonAssignment
             }));
 
             services.AddControllers();
+            var contact = new OpenApiContact()
+            {
+                Name = "FirstName LastName",
+                Email = "user@example.com",
+                Url = new Uri("http://www.example.com")
+            };
+            var license = new OpenApiLicense()
+            {
+                Name = "My License",
+                Url = new Uri("http://www.example.com")
+            };
+
+            var info = new OpenApiInfo()
+            {
+                Version = "v1",
+                Title = "Swagger Demo API",
+                Description = "Swagger Demo API Description",
+                TermsOfService = new Uri("http://www.example.com"),
+                Contact = contact,
+                License = license
+            };
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", info);
+            });
+
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
 
         }
 
@@ -48,6 +79,13 @@ namespace GleasonAssignment
         {
             app.UseDeveloperExceptionPage();
         }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                "Swagger Demo API v1");
+            });
 
             app.UseRouting();
             app.UseCors("MyPolicy");

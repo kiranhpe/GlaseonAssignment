@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DataAccess.Entities
 {
+    [Table("user")]
     public partial class Users
     {
         [Key]
@@ -22,12 +23,10 @@ namespace DataAccess.Entities
 
         public bool trail_user { get; set; }
 
-        public int role_id { get; set; }
+        public string role { get; set; }
 
-        public int customer_type_id { get; set; }
-        //public ICollection<Roles> role { get; set; }
+        public string customer_type { get; set; }
 
-        //public CustomerType customerType { get; set; }
 
     }
 }

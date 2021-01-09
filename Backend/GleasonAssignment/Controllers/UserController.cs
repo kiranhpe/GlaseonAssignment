@@ -23,7 +23,7 @@ namespace GleasonAssignment.Controllers
         }
 
         [HttpGet]
-        private IActionResult GetUsers()
+        public IActionResult GetUsers()
         {
             try
             {
@@ -41,11 +41,12 @@ namespace GleasonAssignment.Controllers
         }
 
         [HttpGet]
-        private IActionResult GetUser(int id)
+        [Route("{id}")]
+        public IActionResult GetUser(int id)
         {
             try
             {
-                var result = m_UserService.GetUsers(new User() {Id = id });
+                var result = m_UserService.GetUsers(new User() {Id = id }).FirstOrDefault();
 
                 if (result != null)
                     return Ok(result);
@@ -59,7 +60,7 @@ namespace GleasonAssignment.Controllers
         }
 
         [HttpPost]
-        private IActionResult Adduser([FromBody]User user)
+        public IActionResult Adduser([FromBody]User user)
         {
             try
             {
@@ -77,11 +78,30 @@ namespace GleasonAssignment.Controllers
         }
 
         [HttpPut]
-        private IActionResult UpdateUser([FromBody]User user)
+        public IActionResult UpdateUser([FromBody]User user)
         {
             try
             {
                 var result = m_UserService.UpdateUser(user);
+
+                if (result != null)
+                    return Ok(result);
+                else
+                    return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            try
+            {
+                var result = m_UserService.DeleteUser(new User() { Id = id });
 
                 if (result != null)
                     return Ok(result);

@@ -64,30 +64,38 @@ namespace BackEndLogic.Features
 
         private User GetUserModel(DataAccess.Entities.Users users)
         {
+            if (users == null)
+            {
+                return null;
+            }
             return new User()
             {
                 Id = users.Id,
                 trail_user = users.trail_user,
-                customer_type_id = users.customer_type_id,
+                customer_type = users.customer_type,
                 email = users.email,
                 first_name = users.first_name,
                 last_name = users.last_name,
-                role_id = users.role_id,
+                role = users.role,
                 username = users.username
             };
         }
 
         private DataAccess.Entities.Users GetUserEntity(BackEndLogic.Models.User users)
         {
+            if(users == null)
+            {
+                return null;
+            }
             return new DataAccess.Entities.Users()
             {
                 Id = users.Id,
                 trail_user = users.trail_user,
-                customer_type_id = users.customer_type_id,
+                customer_type = users.customer_type,
                 email = users.email,
                 first_name = users.first_name,
                 last_name = users.last_name,
-                role_id = users.role_id,
+                role = users.role,
                 username = users.username
             };
         }

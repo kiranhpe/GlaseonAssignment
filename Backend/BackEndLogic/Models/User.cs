@@ -20,9 +20,9 @@ namespace BackEndLogic.Models
 
         public bool trail_user { get; set; }
 
-        public int role_id { get; set; }
+        public string role { get; set; }
 
-        public int customer_type_id { get; set; }
+        public string customer_type { get; set; }
 
     }
 }

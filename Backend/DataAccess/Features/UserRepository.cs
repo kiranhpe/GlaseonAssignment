@@ -53,7 +53,7 @@ namespace DataAccess.Features
 
             using (var context = new EmployeeDbContext())
             {
-                if(users != null)
+                if(users == null)
                 {
                     return context.Users.ToList();
                 }
@@ -78,8 +78,8 @@ namespace DataAccess.Features
                         isExists.first_name = users.first_name;
                         isExists.email = users.email;
                         isExists.username = users.username;
-                        isExists.role_id = users.role_id;
-                        isExists.customer_type_id = users.customer_type_id;
+                        isExists.role = users.role;
+                        isExists.customer_type = users.customer_type;
                         isExists.trail_user = users.trail_user;
 
                         context.SaveChanges();

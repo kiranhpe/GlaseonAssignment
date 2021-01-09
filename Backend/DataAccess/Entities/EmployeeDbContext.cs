@@ -5,15 +5,12 @@ using System.Text;
 
 namespace DataAccess.Entities
 {
-    class EmployeeDbContext : DbContext
+    public class EmployeeDbContext : DbContext
     {
 
         public virtual DbSet<Admin> Admin { get; set; }
 
-        public virtual DbSet<Roles> Roles { get; set; }
-
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<CustomerType> CustomerTypes { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

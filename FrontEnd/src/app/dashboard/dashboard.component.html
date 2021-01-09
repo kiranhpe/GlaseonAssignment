@@ -1,0 +1,17 @@
+    <mat-toolbar color="primary">
+      <span>GEMS Could Web Application</span>
+    </mat-toolbar>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav mode="side" opened class="side-nav">
+        <ul>
+            <li>
+                <a routerLink="">Dashboard</a></li>
+            <hr/>
+            <li><a routerLink="/user">User Management</a></li>
+        </ul>
+    </mat-sidenav>
+    <mat-sidenav-content class="main">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
