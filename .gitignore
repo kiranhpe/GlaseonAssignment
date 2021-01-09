@@ -1,0 +1,7 @@
+*.zip
+
+bin/
+obj/
+Debug/
+Release/
+.vs/

@@ -1,0 +1,19 @@
+.login {
+    width: 60%;
+    margin: 10px auto;
+    align-items: center;
+    
+}
+
+input {
+    margin-top: 30px;
+    width: 100%;
+    height: 50px;
+}
+
+input[type="submit"] {
+    background-color: rgb(84, 25, 139);
+    color: #fff;
+    font-size: larger;
+    cursor: pointer;
+}
