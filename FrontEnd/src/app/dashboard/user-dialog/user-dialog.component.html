@@ -29,13 +29,13 @@
         </p>
         
         <p>
-            <mat-checkbox (click)="trailUser =!trailUser " [checked]="trailUser">Trail User</mat-checkbox>
+            <mat-checkbox (change)="toggleTrailUser($event)" [checked]="trailUser" [disabled]="data.action == 'view'">Trail User</mat-checkbox>
         </p>
     </div>
     <div>
         <mat-form-field appearance="fill">
             <mat-label>Customer</mat-label>
-            <mat-select (selectionChange)="changeCustomer($event)">
+            <mat-select (selectionChange)="changeCustomer($event)" formControlName="customer" [disabled]="data.action == 'view'">
               <mat-option *ngFor="let costomer of costomers" [value]="costomer.value">
                 {{costomer.viewValue}}
               </mat-option>
@@ -46,7 +46,7 @@
         <br/>
         <br/>
         <p *ngFor="let item of roles">
-            <mat-checkbox [checked]="item.checked" (change)=updateRoles(item.value)>{{item.value}}</mat-checkbox>
+            <mat-checkbox [checked]="item.checked" (change)=updateRoles(item.value)  [disabled]="data.action == 'view'">{{item.value}}</mat-checkbox>
         </p>
        
     </div>
@@ -55,5 +55,6 @@
     <div mat-dialog-actions class="actions">
         <button mat-raised-button color="primary" (click)="onSave()" *ngIf="data.action == 'add'">Save</button>
         <button mat-raised-button color="primary" (click)="onEdit()" *ngIf="data.action == 'edit'">Update</button>
-        <button mat-raised-button *ngIf="data.action == 'add' || data.action == 'edit'">Reset</button>
+        <button mat-raised-button *ngIf="data.action == 'add' || data.action == 'edit'" (click)=reset()>Reset</button>
+        <button  mat-raised-button (click) = close()>Close</button>
     </div>

@@ -20,3 +20,15 @@ table {
   button {
       margin-left: 5px;
   }
+
+  .search {
+      width: 100%;
+      background-color: #f8f9fa;
+  }
+  .search input {
+    width: 100%;
+    background-color: #f8f9fa;
+    height: 50px;
+    font-size: 20px;
+    padding: 10px;
+}

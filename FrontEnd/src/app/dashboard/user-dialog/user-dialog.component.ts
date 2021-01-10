@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../user.service';
 import { User } from '../user/user';
 
@@ -15,7 +17,8 @@ export class UserDialogComponent implements OnInit {
   constructor(
     private userService: UserService,
     public dialogRef: MatDialogRef<UserDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _snackBar: MatSnackBar
   ) {}
 
   costomers = [
@@ -34,12 +37,20 @@ export class UserDialogComponent implements OnInit {
 
   user: User;
   ngOnInit(): void {
+    this.profileForm = new FormGroup({
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+      username: new FormControl(''),
+      email: new FormControl(''),
+      customer: new FormControl('')
+    });
     if (this.data.action == 'add') {
       this.profileForm = new FormGroup({
         firstName: new FormControl(''),
         lastName: new FormControl(''),
         username: new FormControl(''),
         email: new FormControl(''),
+        customer: new FormControl('')
       });
     }
     if (this.data.action == 'view') {
@@ -50,10 +61,12 @@ export class UserDialogComponent implements OnInit {
           lastName: new FormControl(user.last_name),
           username: new FormControl(user.username),
           email: new FormControl(user.email),
+          customer: new FormControl(user.customer_type)
         });
 
         this.trailUser = user.trail_user;
         this.roles = JSON.parse(user.role);
+        this.profileForm.disable();
       });
     }
     if (this.data.action == 'edit') {
@@ -64,6 +77,7 @@ export class UserDialogComponent implements OnInit {
           lastName: new FormControl(user.last_name),
           username: new FormControl(user.username),
           email: new FormControl(user.email),
+          customer: new FormControl(user.customer_type)
         });
 
         this.trailUser = user.trail_user;
@@ -86,6 +100,11 @@ export class UserDialogComponent implements OnInit {
     this.userService.addUser(user).subscribe((data: any) => {
       this.dialogRef.close();
     });
+
+    this._snackBar.open('User Created!!', 'close',{
+      duration: 500,
+      panelClass:['green-snackbar']
+    } )
   }
 
   onEdit() {
@@ -105,6 +124,10 @@ export class UserDialogComponent implements OnInit {
       .subscribe((data: any) => {
         this.dialogRef.close();
       });
+
+      this._snackBar.open('User Updated!!', 'close',{
+        duration: 500
+      } )
   }
 
   changeCustomer(event: MatSelectChange) {
@@ -124,5 +147,24 @@ export class UserDialogComponent implements OnInit {
     this.userService.getUserById(id).subscribe((user) => {
       this.user = user;
     });
+  }
+
+  toggleTrailUser(event:MatCheckboxChange) {
+    this.trailUser = event.checked;
+  }
+
+  close(){
+    this.dialogRef.close();
+  }
+
+  reset(){
+    this.profileForm.reset();
+    this.roles = [
+      { checked: false, value: 'Global Gleason Admin' },
+      { checked: false, value: 'User' },
+      { checked: false, value: 'Customer Admin' },
+      { checked: false, value: 'Global Interl Sales' },
+    ];
+    this.trailUser = false;
   }
 }

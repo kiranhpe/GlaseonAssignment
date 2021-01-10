@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from './user';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-user',
@@ -13,10 +15,10 @@ import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 })
 export class UserComponent implements OnInit {
   displayedColumns: string[] = ['user', 'email', 'customer', 'roles', 'trailUser', 'actions'];
-  dataSource:User[] = [];
+dataSource = new MatTableDataSource<User>();
 
-  constructor(private userService : UserService, public dialog: MatDialog) { }
-
+  constructor(private userService : UserService, public dialog: MatDialog,private _snackBar: MatSnackBar) { }
+  search ="";
   ngOnInit(): void {
     this.getUsers();
   }
@@ -25,7 +27,7 @@ export class UserComponent implements OnInit {
   getUsers() {
     this.userService.getUsers()
       .subscribe((users: User[]) => {
-        this.dataSource = users;
+        this.dataSource.data = users;
       })
   }
 
@@ -41,6 +43,12 @@ export class UserComponent implements OnInit {
           .subscribe((deleted: boolean) => {
             if(deleted) {
               this.getUsers();
+              this._snackBar.open('User Deleted!!', 'close',{
+                panelClass:[
+                  'red-snackbar'
+                ],
+                duration: 500
+              } )
             }
           });
       }
@@ -73,5 +81,9 @@ export class UserComponent implements OnInit {
       }
     }
    return r.charAt(0) === ',' ? r.substring(1) : r;
+  }
+
+  doFilter = () => {
+    this.dataSource.filter = this.search.trim().toLocaleLowerCase();
   }
 }

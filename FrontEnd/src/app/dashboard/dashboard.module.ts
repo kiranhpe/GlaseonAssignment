@@ -17,6 +17,9 @@ import { MatInputModule } from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
 
 
 @NgModule({
@@ -25,6 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     UserComponent,
     DialogComponent,
     UserDialogComponent,
+    DashboardViewComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +44,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule,
+
+
+    HighchartsChartModule
   ],
 })
 export class DashboardModule {}
